@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  passwordHash  String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  todos         Todo[]
+  sessions      RefreshSession[]
+}
+
+model Todo {
+  id        String   @id @default(cuid())
+  title     String
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ownerId   String
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+}
+
+model RefreshSession {
+  id                 String   @id @default(cuid())
+  userId             String
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash          String   @unique
+  createdAt          DateTime @default(now())
+  revokedAt          DateTime?
+  replacedById       String?  @unique // rotation: the new session id replacing this one
+  replacedBy         RefreshSession? @relation("SessionReplacement", fields: [replacedById], references: [id])
+  prev               RefreshSession? @relation("SessionReplacement")
+  lastUsedAt         DateTime?
+  reuseDetectedAt    DateTime?
+
+  @@index([userId])
+}
