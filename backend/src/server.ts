@@ -3,11 +3,13 @@ import cors from 'cors'
 import helmet from 'helmet'
 import pino from 'pino'
 import pinoHttp from 'pino-http'
-import { env } from './env'
+import { env } from './env.js'
 
 const app = express()
 const logger = pino({ level: process.env.LOG_LEVEL || 'info' })
-app.use(pinoHttp({ logger }))
+// pino-http default export is a function; TS types may cause confusion, cast it
+app.use((pinoHttp as unknown as (opts: any) => any)({ logger }))
+
 
 app.use(express.json())
 app.use(cors({ origin: env.corsOrigin, credentials: true }))
