@@ -1,0 +1,13 @@
+# Root ignore
+node_modules/
+**/node_modules/
+*.log
+.DS_Store
+.env
+**/.env
+.env.local
+coverage/
+dist/
+build/
+frontend/dist
+backend/src/generated/prisma
