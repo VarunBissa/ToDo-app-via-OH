@@ -1,13 +1,9 @@
 # Task List
 
-1. ✅ Create feature branch and commit current changes
-
-2. 🔄 Install frontend libraries (router, query, ky/axios, rhf, zod)
-Install libs and minimal app shell setup.
-3. ⏳ Add Prisma with Postgres schema and docker-compose
-Models: User, Todo, RefreshToken; .env setup; generate client.
-4. ⏳ Start Postgres container and run initial migration
-docker-compose up -d; prisma migrate dev --name init
-5. ⏳ Commit and push branch to GitHub
-Push to new branch; do not open PR unless asked.
+1. ✅ Commit and push branch to GitHub
+Branch pushed and updated multiple times.
+2. 🔄 Start Postgres container and run initial migration
+docker-compose updated with provided creds. Await user to run DB or provide confirmation to proceed with migrations from here if DB reachable.
+3. ⏳ Open draft PR for feat/scaffold-initial
+Awaiting user confirmation.
 
